@@ -11,3 +11,30 @@ code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
         monospace;
 }
+
+.pokemon {
+    display: flex;
+    flex-direction: column;
+    border: 2px solid black;
+}
+
+.name {
+    text-align: center;
+}
+
+.image {
+    margin-left: auto;
+    margin-right: auto;
+    height: auto;
+    width: 150px;
+    object-fit: contain;
+}
+
+.wrapper {
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    width: fit-content;
+    margin: 15px auto;
+    font-size: 40px;
+}
