@@ -7,33 +7,38 @@ import {
     PokemonSummary,
     PokemonSummaryResponse,
 } from './interfaces/pokemon-summary.interface'
+// import { ViewSummary } from './interfaces/pokemon-summary.interface'
 
 import Header from './Header'
 import Container from './Container'
 import Footer from './Footer'
+import PopUp from './PopUp'
 
 function App() {
     const [pokemons, setPokemons] = useState<PokemonSummary[]>([])
+    const [showPopUp, setShowPopUp] = useState(false)
     const [offset, setOffset] = useState(0)
+    const [pokemon, setPokemon] = useState({} as PokemonSummary)
 
     useEffect(() => {
         axios
             .get<PokemonSummaryResponse>(
                 `https://pokeapi.co/api/v2/pokemon?limit=16&offset=${offset}`
             )
-
             .then((response: AxiosResponse<PokemonSummaryResponse>) => {
                 setPokemons(response.data.results)
-                // console.log(response.data)
             })
     }, [offset])
 
     return (
         <div className="wrapper">
             <Header></Header>
-            <Container pokemons={pokemons} setPokemons={setPokemons}>
-                cos tam
-            </Container>
+            <Container
+                pokemons={pokemons}
+                setPokemon={setPokemon}
+                setView={setShowPopUp}
+            ></Container>
+            {showPopUp ? <PopUp pokemon={pokemon} offset={offset} setOffset={setOffset}></PopUp> : null}
             <Footer offset={offset} setOffset={setOffset}></Footer>
         </div>
     )

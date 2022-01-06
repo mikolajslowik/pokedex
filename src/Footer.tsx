@@ -1,7 +1,10 @@
 interface FooterProps {
-    offset: number;
-    setOffset:  React.Dispatch<React.SetStateAction<number>>;
+    offset: number
+    setOffset: React.Dispatch<React.SetStateAction<number>>
 }
+
+
+
 
 function Footer(props: FooterProps) {
     return (
@@ -11,14 +14,14 @@ function Footer(props: FooterProps) {
                 onClick={() =>
                     props.offset === 0
                         ? null
-                        : props.setOffset(props.offset - 20)
+                        : props.setOffset(props.offset - 16)
                 }
             >
                 <p>PREVIOUS</p>
             </div>
             <div
                 className="button next"
-                onClick={() => props.setOffset(props.offset + 20)}
+                onClick={() => props.setOffset(props.offset + 16)}
             >
                 <p>NEXT</p>
             </div>
