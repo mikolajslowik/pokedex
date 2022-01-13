@@ -3,9 +3,6 @@ interface FooterProps {
     setOffset: React.Dispatch<React.SetStateAction<number>>
 }
 
-
-
-
 function Footer(props: FooterProps) {
     return (
         <div className="buttonContainer">

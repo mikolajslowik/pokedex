@@ -105,3 +105,52 @@ code {
     line-height: 100vh;
     text-align: center;
 }
+
+/* POPUP */
+
+.popUpContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: 100vw;
+    height: 100vh;
+    background-color: #d80286;
+    /* opacity: 0.7; */
+}
+
+.closePopUp {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 50px;
+    height: 50px;
+    margin: 50px;
+    opacity: 1;
+}
+
+.previousPokemon {
+    position: fixed;
+    top: calc(50% - 25px);
+    left: 0;
+    width: 50px;
+    height: 50px;
+    margin: 50px;
+}
+
+.nextPokemon {
+    position: fixed;
+    top: calc(50% - 25px);
+    right: 0;
+    width: 50px;
+    height: 50px;
+    margin: 50px;
+}
+
+.pokemonData {
+    margin: auto;
+}
+
+.pokemonImg {
+    justify-content: center;
+}
