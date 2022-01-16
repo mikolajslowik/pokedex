@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import PopUpNewIdea from './PopUpNewIdea'
+import Popup from './Popup'
 import axios from 'axios'
 import { AxiosResponse } from 'axios'
 import {
@@ -75,11 +75,11 @@ function Container(props: ContainerProps) {
                 })}
             </div>
             {showPopUp ? (
-                <PopUpNewIdea
+                <Popup
                     setPokemonId={(id: number) => selectPokemon(id)}
                     pokemonId={pokemon.id}
                     setShowPopUp={setShowPopUp}
-                ></PopUpNewIdea>
+                ></Popup>
             ) : null}
         </>
     )

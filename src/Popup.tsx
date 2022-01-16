@@ -7,7 +7,7 @@ interface PopUpProps {
     setShowPopUp: (show: boolean) => void
 }
 
-function PopUpNewIdea(props: PopUpProps) {
+function Popup(props: PopUpProps) {
     const [details, setDetails] = useState<any>()
 
     useEffect(() => {
@@ -20,6 +20,7 @@ function PopUpNewIdea(props: PopUpProps) {
 
     return (
         <div className="popUpContainer">
+            <div className="popupBackground"> </div>
             <button
                 className="closePopUp"
                 onClick={() => props.setShowPopUp(false)}
@@ -33,12 +34,23 @@ function PopUpNewIdea(props: PopUpProps) {
                 {'<'}
             </button>
             <div className="pokemonData">
-                <img
-                    className="pokemonImg"
-                    src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${props.pokemonId}.png`}
-                    alt=""
-                ></img>
-                <div className="pokemonData">
+                <div className="pokemonImgContainer">
+                    <img
+                        className="pokemonImg"
+                        src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${props.pokemonId}.png`}
+                        alt=""
+                    ></img>
+                </div>
+                <div className="selectContainer">
+                    <label htmlFor="chooseData">Choose a car:</label>
+                    <select id="chooseData">
+                        <option value="volvo">Volvo</option>
+                        <option value="saab">Saab</option>
+                        <option value="opel">Opel</option>
+                        <option value="audi">Audi</option>
+                    </select>
+                </div>
+                <div className="pokemonInfo">
                     <ul>
                         {details?.abilities.map((data: any) => {
                             return (
@@ -60,4 +72,4 @@ function PopUpNewIdea(props: PopUpProps) {
     )
 }
 
-export default PopUpNewIdea
+export default Popup
