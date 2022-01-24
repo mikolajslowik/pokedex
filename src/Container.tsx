@@ -14,33 +14,53 @@ interface ContainerProps {
 }
 
 function Container(props: ContainerProps) {
-    const [pokemon, setPokemon] = useState({} as ExtendedPokemonSummary)
+    const [pokemonId, setPokemonId] = useState(1)
     const [pokemons, setPokemons] = useState<ExtendedPokemonSummary[]>([])
     const [showPopUp, setShowPopUp] = useState(false)
+    const [cachedOffset, setCachedOffset] = useState(new Set())
+    // const [page, setPage] = useState('')
+
+    // const pageNumber = () => {
+    //     return cachedOffset.size / props.offset
+    // }
 
     useEffect(() => {
+        getPokemon()
+    }, [])
+
+    const getPokemon = (id?: number, newOffset = props.offset) => {
+        if (cachedOffset.has(newOffset)) {
+            console.log('returning', props.offset, newOffset)
+            return
+        }
+
         axios
             .get<PokemonSummaryResponse>(
-                `https://pokeapi.co/api/v2/pokemon?limit=16&offset=${props.offset}`
+                `https://pokeapi.co/api/v2/pokemon?limit=16&offset=${newOffset}`
             )
             .then((response: AxiosResponse<PokemonSummaryResponse>) => {
                 normalizePokemons(response.data.results)
+                setCachedOffset(new Set([...cachedOffset, newOffset]))
+                console.log(typeof id)
+
+                if (typeof id !== 'undefined') {
+                    console.log(id)
+                    selectPokemon(id)
+                }
             })
-    }, [props.offset])
+    }
 
-    const displayPopup = (pokemon: ExtendedPokemonSummary) => {
-        setPokemon(pokemon)
+    const displayPopup = (newPokemonId: number) => {
+        setPokemonId(newPokemonId)
         setShowPopUp(true)
+        console.log(newPokemonId)
     }
 
-    function selectPokemon(id: number) {
-        const foundPokemon = pokemons.find((pokemon) => {
-            return pokemon.id === id
-        }) as ExtendedPokemonSummary
-        setPokemon(foundPokemon)
+    const selectPokemon = (id: number) => {
+        setPokemonId(id)
     }
 
-    function normalizePokemons(rawPokemons: PokemonSummary[]) {
+    const normalizePokemons = (rawPokemons: PokemonSummary[]) => {
         const normalizedPokemons = rawPokemons.map(
             (rawPokemon: PokemonSummary) => {
                 const idSource = rawPokemon.url.split('/')
@@ -48,36 +68,42 @@ function Container(props: ContainerProps) {
                 return { ...rawPokemon, id }
             }
         )
-        setPokemons(normalizedPokemons)
+        console.log(rawPokemons, normalizedPokemons)
+        setPokemons([...pokemons, ...normalizedPokemons])
     }
     return (
         <>
             <div className="gridContainer">
-                {pokemons.map((pokemon: any) => {
-                    return (
-                        <button
-                            className="pokemon"
-                            onClick={() => {
-                                displayPopup(pokemon)
-                            }}
-                            key={pokemon.id}
-                        >
-                            <div>
-                                <img
-                                    className="image"
-                                    src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`}
-                                    alt={pokemon.name}
-                                />
-                                <p className="name">{pokemon.name}</p>
-                            </div>
-                        </button>
-                    )
-                })}
+                {pokemons
+                    .slice(props.offset, props.offset + 16)
+                    .map((pokemon: any) => {
+                        return (
+                            <button
+                                className="pokemon"
+                                onClick={() => {
+                                    displayPopup(pokemon.id)
+                                }}
+                                key={pokemon.id}
+                            >
+                                <div>
+                                    <img
+                                        className="image"
+                                        src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`}
+                                        alt={pokemon.name}
+                                    />
+                                    <p className="name">{pokemon.name}</p>
+                                </div>
+                            </button>
+                        )
+                    })}
             </div>
             {showPopUp ? (
                 <Popup
+                    getPokemon={getPokemon}
+                    offset={props.offset}
+                    setOffset={props.setOffset}
                     setPokemonId={(id: number) => selectPokemon(id)}
-                    pokemonId={pokemon.id}
+                    pokemonId={pokemonId}
                     setShowPopUp={setShowPopUp}
                 ></Popup>
             ) : null}

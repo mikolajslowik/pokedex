@@ -5,6 +5,10 @@ interface PopUpProps {
     pokemonId: number
     setPokemonId: (id: number) => void
     setShowPopUp: (show: boolean) => void
+    offset: number
+    setOffset: (offset: number) => void
+    getPokemon: (id?: number, offset?: number) => void
+    // pageNumber: () => number
 }
 
 function Popup(props: PopUpProps) {
@@ -18,6 +22,28 @@ function Popup(props: PopUpProps) {
             })
     }, [props.pokemonId])
 
+    const previousPokemon = () => {
+        if ((props.pokemonId - 1) % 16 === 0) {
+            console.log('firstPrev', props.offset - 16)
+            props.setOffset(props.offset - 16)
+            props.getPokemon(props.pokemonId - 1, props.offset - 16)
+        }
+        props.setPokemonId(props.pokemonId - 1)
+        console.log('previous', props.pokemonId, props.offset)
+    }
+
+    const nextPokemon = () => {
+        if (props.pokemonId % 16 === 0) {
+            console.log('firstNext', props.pokemonId + 1, props.offset)
+            props.setOffset(props.offset + 16)
+            props.getPokemon(props.pokemonId + 1, props.offset + 16)
+        } else {
+            props.setPokemonId(props.pokemonId + 1)
+
+            console.log('next', props.pokemonId + 1, props.offset)
+        }
+    }
+
     return (
         <div className="popUpContainer">
             <div className="popupBackground"> </div>
@@ -28,8 +54,14 @@ function Popup(props: PopUpProps) {
                 x
             </button>
             <button
-                className="previousPokemon"
-                onClick={() => props.setPokemonId(props.pokemonId - 1)} // dodać disabled na index 0
+                // tutaj dodać warunek ale wcześniej utworzyć state
+
+                className={
+                    'previousPokemon ' +
+                    (props.pokemonId === 1 ? 'disabled' : '')
+                }
+                onClick={previousPokemon}
+                // dodać disabled na index 0
             >
                 {'<'}
             </button>
@@ -42,12 +74,9 @@ function Popup(props: PopUpProps) {
                     ></img>
                 </div>
                 <div className="selectContainer">
-                    <label htmlFor="chooseData">Choose a car:</label>
+                    <label htmlFor="chooseData">Choose a skill:</label>
                     <select id="chooseData">
                         <option value="volvo">Volvo</option>
-                        <option value="saab">Saab</option>
-                        <option value="opel">Opel</option>
-                        <option value="audi">Audi</option>
                     </select>
                 </div>
                 <div className="pokemonInfo">
@@ -63,8 +92,16 @@ function Popup(props: PopUpProps) {
                 </div>
             </div>
             <button
-                className="nextPokemon"
-                onClick={() => props.setPokemonId(props.pokemonId + 1)}
+                className={
+                    'nextPokemon '
+                    //  +
+                    // (
+                    // props.pokemonId ===
+                    // // jaka jest maksymalna długość tablicy, gdzie jest tablica ze wszystkimi poksami
+                    // ? 'disabled' : ''
+                    // )
+                }
+                onClick={nextPokemon}
             >
                 {'>'}
             </button>

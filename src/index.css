@@ -59,6 +59,10 @@ code {
     text-align: center;
 }
 
+.disabled {
+    display: none;
+}
+
 .button {
     color: #fff;
     width: 200px;
