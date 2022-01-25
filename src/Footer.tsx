@@ -5,7 +5,6 @@ interface FooterProps {
 
 function Footer(props: FooterProps) {
     // const nextPage = () => {
-    //     console.log('firstNext', props.pokemonId + 1, props.offset)
     //     props.setOffset(props.offset + 16)
     //     props.getPokemon(props.pokemonId + 1, props.offset + 16)
     // }

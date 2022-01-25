@@ -18,11 +18,6 @@ function Container(props: ContainerProps) {
     const [pokemons, setPokemons] = useState<ExtendedPokemonSummary[]>([])
     const [showPopUp, setShowPopUp] = useState(false)
     const [cachedOffset, setCachedOffset] = useState(new Set())
-    // const [page, setPage] = useState('')
-
-    // const pageNumber = () => {
-    //     return cachedOffset.size / props.offset
-    // }
 
     useEffect(() => {
         getPokemon()
@@ -44,8 +39,7 @@ function Container(props: ContainerProps) {
                 console.log(typeof id)
 
                 if (typeof id !== 'undefined') {
-                    console.log(id)
-                    selectPokemon(id)
+                    setPokemonId(id)
                 }
             })
     }
@@ -54,10 +48,6 @@ function Container(props: ContainerProps) {
         setPokemonId(newPokemonId)
         setShowPopUp(true)
         console.log(newPokemonId)
-    }
-
-    const selectPokemon = (id: number) => {
-        setPokemonId(id)
     }
 
     const normalizePokemons = (rawPokemons: PokemonSummary[]) => {
@@ -102,7 +92,7 @@ function Container(props: ContainerProps) {
                     getPokemon={getPokemon}
                     offset={props.offset}
                     setOffset={props.setOffset}
-                    setPokemonId={(id: number) => selectPokemon(id)}
+                    setPokemonId={setPokemonId}
                     pokemonId={pokemonId}
                     setShowPopUp={setShowPopUp}
                 ></Popup>

@@ -8,7 +8,6 @@ interface PopUpProps {
     offset: number
     setOffset: (offset: number) => void
     getPokemon: (id?: number, offset?: number) => void
-    // pageNumber: () => number
 }
 
 function Popup(props: PopUpProps) {
@@ -24,23 +23,18 @@ function Popup(props: PopUpProps) {
 
     const previousPokemon = () => {
         if ((props.pokemonId - 1) % 16 === 0) {
-            console.log('firstPrev', props.offset - 16)
             props.setOffset(props.offset - 16)
             props.getPokemon(props.pokemonId - 1, props.offset - 16)
         }
         props.setPokemonId(props.pokemonId - 1)
-        console.log('previous', props.pokemonId, props.offset)
     }
 
     const nextPokemon = () => {
         if (props.pokemonId % 16 === 0) {
-            console.log('firstNext', props.pokemonId + 1, props.offset)
             props.setOffset(props.offset + 16)
             props.getPokemon(props.pokemonId + 1, props.offset + 16)
         } else {
             props.setPokemonId(props.pokemonId + 1)
-
-            console.log('next', props.pokemonId + 1, props.offset)
         }
     }
 
@@ -61,7 +55,6 @@ function Popup(props: PopUpProps) {
                     (props.pokemonId === 1 ? 'disabled' : '')
                 }
                 onClick={previousPokemon}
-                // dodać disabled na index 0
             >
                 {'<'}
             </button>
