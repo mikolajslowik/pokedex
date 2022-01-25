@@ -48,8 +48,6 @@ function Popup(props: PopUpProps) {
                 x
             </button>
             <button
-                // tutaj dodać warunek ale wcześniej utworzyć state
-
                 className={
                     'previousPokemon ' +
                     (props.pokemonId === 1 ? 'disabled' : '')
