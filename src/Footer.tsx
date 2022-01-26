@@ -2,14 +2,19 @@ interface FooterProps {
     offset: number
     setOffset: React.Dispatch<React.SetStateAction<number>>
     pokemonId: number
+    // pokemonsAmount: number
     getPokemon: (id?: number | undefined, newOffset?: number) => void
 }
 
 function Footer(props: FooterProps) {
     const nextPage = () => {
+        // if ( === ) {
+        //     return
+        // } else {
         props.setOffset(props.offset + 16)
         props.getPokemon(props.pokemonId + 1, props.offset + 16)
     }
+
     return (
         <div className="buttonContainer">
             <div

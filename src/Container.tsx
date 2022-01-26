@@ -12,6 +12,7 @@ interface ContainerProps {
     setPokemonId: React.Dispatch<React.SetStateAction<number>>
     pokemonId: number
     pokemons: ExtendedPokemonSummary[]
+    pokemonsAmount: number
 }
 
 function Container(props: ContainerProps) {
@@ -57,6 +58,7 @@ function Container(props: ContainerProps) {
                     setPokemonId={props.setPokemonId}
                     pokemonId={props.pokemonId}
                     setShowPopUp={setShowPopUp}
+                    pokemonsAmount={props.pokemonsAmount}
                 ></Popup>
             ) : null}
         </>

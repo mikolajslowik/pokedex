@@ -15,9 +15,14 @@ function App() {
     const [offset, setOffset] = useState(0)
     const [pokemonId, setPokemonId] = useState(1)
     const [pokemons, setPokemons] = useState<ExtendedPokemonSummary[]>([])
+    const [pokemonsAmount, setPokemonsAmount] = useState(0)
 
     useEffect(() => {
         getPokemon()
+    }, [])
+
+    useEffect(() => {
+        getPokemonsAmount()
     }, [])
 
     const getPokemon = (id?: number, newOffset = offset) => {
@@ -33,13 +38,24 @@ function App() {
             .then((response: AxiosResponse<PokemonSummaryResponse>) => {
                 normalizePokemons(response.data.results)
                 setCachedOffset(new Set([...cachedOffset, newOffset]))
-                console.log(typeof id)
 
                 if (typeof id !== 'undefined') {
                     setPokemonId(id)
                 }
             })
     }
+
+    const getPokemonsAmount = () => {
+        axios
+            .get<PokemonSummaryResponse>(
+                `https://pokeapi.co/api/v2/pokemon?limit=16&offset=16`
+            )
+            .then((response: AxiosResponse<PokemonSummaryResponse>) =>
+                setPokemonsAmount(response.data.count)
+            )
+    }
+
+    console.log(pokemonsAmount)
 
     const normalizePokemons = (rawPokemons: PokemonSummary[]) => {
         const normalizedPokemons = rawPokemons.map(
@@ -63,6 +79,7 @@ function App() {
                 setPokemonId={setPokemonId}
                 pokemonId={pokemonId}
                 pokemons={pokemons}
+                pokemonsAmount={pokemonsAmount}
             ></Container>
 
             <Footer
@@ -70,6 +87,7 @@ function App() {
                 setOffset={setOffset}
                 pokemonId={pokemonId}
                 getPokemon={getPokemon}
+                // pokemonsAmount={pokemonsAmount}
             ></Footer>
         </div>
     )

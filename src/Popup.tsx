@@ -8,6 +8,7 @@ interface PopUpProps {
     offset: number
     setOffset: (offset: number) => void
     getPokemon: (id?: number, offset?: number) => void
+    pokemonsAmount: number
 }
 
 function Popup(props: PopUpProps) {
@@ -84,13 +85,8 @@ function Popup(props: PopUpProps) {
             </div>
             <button
                 className={
-                    'nextPokemon '
-                    //  +
-                    // (
-                    // props.pokemonId ===
-                    // // jaka jest maksymalna długość tablicy, gdzie jest tablica ze wszystkimi poksami
-                    // ? 'disabled' : ''
-                    // )
+                    'nextPokemon ' +
+                    (props.pokemonId === props.pokemonsAmount ? 'disabled' : '')
                 }
                 onClick={nextPokemon}
             >
