@@ -13,6 +13,7 @@ interface PopUpProps {
 
 function Popup(props: PopUpProps) {
     const [details, setDetails] = useState<any>()
+    const [abilities, setAbilities] = useState<any>()
 
     useEffect(() => {
         axios
@@ -68,7 +69,9 @@ function Popup(props: PopUpProps) {
                 <div className="selectContainer">
                     <label htmlFor="chooseData">Choose a skill:</label>
                     <select id="chooseData">
-                        <option value="volvo">Volvo</option>
+                        <option value="">attack</option>
+                        <option value="">defence</option>
+                        <option value="">health points</option>
                     </select>
                 </div>
                 <div className="pokemonInfo">
